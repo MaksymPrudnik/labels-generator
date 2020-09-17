@@ -1,0 +1,79 @@
+.form-section {
+    display: flex;
+    flex-direction: column;
+    border: 0.5px solid #aaa;
+    max-width: 80%;
+    margin: 10vh auto;
+    padding: 1rem;
+    box-shadow: 0 0 10px grey;
+    background-color: #eee6;
+}
+
+.form-fieldset {
+    margin: 1rem 3rem;
+    padding: 0 1rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid lightgrey;
+}
+.form-fieldset legend {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.form-fieldset input {
+    display: inline-block;
+    border-bottom: 2px solid #55c;
+    margin: 1rem;
+    min-width: 100px;
+    background-color: transparent;
+    font-size: 1.1rem;
+    padding: 0.2rem 0.5rem;
+}
+
+
+.form-submit-button {
+    margin: 1rem auto 2rem;
+    border: 0.5px solid red;
+    border-radius: 0.75rem;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+.form-submit-button:hover {
+    background-color: darkred;
+}
+
+.delivery-set div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+}
+.delivery-set div input {
+    width: 80%;
+}
+
+.codes-set label {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+
+@media (max-width: 600px) {
+    .form-section {
+        max-width: 100%;
+        padding: 0;
+        box-shadow: none;
+        border: none;
+        border-top: 1.5px solid black;
+        border-bottom: 1.5px solid black;
+    }
+    .form-fieldset {
+        margin: 1rem 0;
+    }
+    .delivery-set  div{
+        grid-template-columns: 1fr;
+    }
+}
