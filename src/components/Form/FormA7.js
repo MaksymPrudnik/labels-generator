@@ -1,19 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Form.css';
 import { useForm } from 'react-hook-form';
+import Loader from '../Loader/Loader';
 
 const FormA7 = () => {
     const {register, handleSubmit, errors} = useForm();
+    const [isPending, setIsPending] = useState(false);
+    const [requestError, setRequestError] = useState('');
 
     const onSubmit = data => {
-        console.log(data);
+        setIsPending(true);
+        fetch('http://localhost:3000/generate-pdf', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ...data })
+        })
+        .then(response => response.text())
+        .then(pdfBase64String => {
+            setIsPending(false)
+            const link = document.createElement('a');
+            link.href = pdfBase64String;
+            link.setAttribute('download', 'BEAst_label.pdf');
+            document.body.appendChild(link);
+            link.click();
+            return console.log('success')
+        })
+        .catch(err => {
+            setIsPending(false)
+            setRequestError(String(err))
+            return console.log(requestError)
+        })
     }
-    if (errors) {
+    if (Object.keys(errors).length) {
         console.log(errors);
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className='form-section'>
+        isPending
+        ? <Loader />
+        : <form onSubmit={handleSubmit(onSubmit)} className='form-section'>
             <fieldset className='form-fieldset from-set'>
                 <legend>FROM:</legend>
                 <input type="text" name="f2_1" ref={register({required: true})} placeholder="Underleverantör AB"/>
