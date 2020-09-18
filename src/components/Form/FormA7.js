@@ -25,6 +25,7 @@ const FormA7 = () => {
             link.setAttribute('download', 'BEAst_label.pdf');
             document.body.appendChild(link);
             link.click();
+            link.parentNode.removeChild(link);
             return console.log('success')
         })
         .catch(err => {
