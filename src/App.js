@@ -3,7 +3,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Redirect
+    Redirect, Link
 } from 'react-router-dom';
 
 import Signin from './routes/Signin/Signin';
@@ -49,12 +49,21 @@ function App() {
         } else { setIsPending(false) }
     }, [isLoggedIn])
 
-    console.log(user, isPending, isLoggedIn)
-
     return isPending
     ? <Loader />
     : (
         <Router>
+            {isLoggedIn && 
+                <div style={{
+                    display: 'flex', justifyContent: 'space-evenly', 
+                    fontSize: '1.2rem', color: 'white',
+                    backgroundColor: 'black',
+                    padding: '1rem'
+                }}>
+                    <h1 style={{textAlign: 'center'}}>Logged with {user}</h1>
+                    <Link to='logout' style={{color: 'white', fontWeight: 700}}>Log out</Link>
+                </div> 
+            }
             <Switch>
                 <Route exact path='/'>
                     {isLoggedIn ? <Redirect to='/generate-pdf'/> : <Redirect to='/signin'/>}

@@ -8,6 +8,7 @@ import Loader from '../../components/Loader/Loader';
 const CredentialsBox = ({setLogin}) => {
     const [success, setSuccess] = useState(false);
     const [isPending, setIsPending] = useState(false);
+    const [loginError, setLoginError] = useState(false);
     const {register, handleSubmit, errors} = useForm();
     let route = useLocation().pathname.slice(1);
     const onSubmit = (data) => {
@@ -33,18 +34,20 @@ const CredentialsBox = ({setLogin}) => {
         })
         .catch(err => {
             setIsPending(false)
-            return console.log(err)
+            return setLoginError(err)
         })
     };
-    if (Object.keys(errors).length) {
-        console.log(errors);
-    }
     return isPending
         ? <Loader />
-        : <div>
-            <form onSubmit={handleSubmit(onSubmit)} className='signin-container'>
-                <input type="email" placeholder="email" name="email" ref={register({required: 'Provide an email'})} />
-                <input type="password" name="password" ref={register({
+        : <div className='credentials-div'>
+            <p className='authorization-errors'>
+                {loginError || (Boolean(Object.keys(errors).length) && errors[Object.keys(errors)[0]].message)}
+            </p>
+            <form onSubmit={handleSubmit(onSubmit)} className='credentials-form'>
+                <label htmlFor="email">Email:</label>
+                <input className='credentials-input' id="email" type="email" placeholder="Email" name="email" ref={register({required: 'Provide an email'})} />
+                <label htmlFor="password">Password:</label>
+                <input className='credentials-input' id="password" type="password" placeholder='password' name="password" ref={register({
                     required: 'Provide a password', 
                     minLength: {
                         value: 6,
@@ -56,7 +59,7 @@ const CredentialsBox = ({setLogin}) => {
                     },
                 })} />
 
-                <input type="submit" value={(route === 'signin' && 'Sign in') || (route === 'register' && 'Register')}/>
+                <input className='credentials-button' type="submit" value={(route === 'signin' && 'Sign in') || (route === 'register' && 'Register')}/>
             </form>
             { success && <Redirect to='/'/> }
         </div>
