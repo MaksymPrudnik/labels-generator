@@ -10,7 +10,7 @@ const FormA7 = () => {
 
     const onSubmit = data => {
         setIsPending(true);
-        fetch('http://localhost:3000/generate-pdf', {
+        fetch(`${process.env.REACT_APP_HOST || 'http://localhost:3000'}/generate-pdf`, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
